@@ -13,7 +13,7 @@ from flask import Flask, request, redirect, send_from_directory
 import time
 import json
 from flask import Flask, request, render_template
-
+from flask import Flask, render_template, request, session, redirect, url_for
 
 
 def preprocess_data(county_coordinates, smoking_data, copd_data, covid_data, sepsis_data, drowning_data, vaccination_data, flu_data, pneumonia_data):
@@ -317,33 +317,54 @@ def main(weight_toggle, marker_cluster_toggle, list_toggle):
                     <span>Top Locations</span> 
                 </label>
             </fieldset>
-                    <div class="submit-area">
-                <button type="submit">Compute</button>
-                <lottie-player id="loader" src="https://assets1.lottiefiles.com/packages/lf20_usmfx6bp.json" background="transparent" speed="1" style="width: 125px; height: 125px; display: none; position: absolute; top: 79%; right: -30px; transform: translateY(0%);" loop autoplay></lottie-player>
-            </div>
+        <div class="submit-area">
+            <button type="submit">Compute</button>
+        </div>
+        <div id="loading-text" style="text-align: center; font-size: 16px; display: none;">GEn1E Ridge Processor</div>
         </form>
+
+    </div> 
+    <div style="position: fixed; bottom: 30px; right: 10px; z-index: 9999;">
+    <img src="https://uploads-ssl.webflow.com/608bbb52742675860410dd77/647f8bf9ce5c07118bcd4b1e_County%20level%20scoring%20card%20LEGEND.png" alt="Logo" style="width: 214px;">
+</div>
+
     </div> 
 
     <div id="sidebar">
     <button id="close" onclick="this.parentElement.style.display='none'">×</button>
         <h2>Top Ranked Locations</h2>
-        <ul id="myList">
-            <li>
-                <h3>Location 1</h3>
-                <p>Sentence 1</p>
-                <p>Sentence 2</p>
-            </li>
-            <li>
-                <h3>Location 2</h3>
-                <p>Sentence 1</p>
-                <p>Sentence 2</p>
-            </li>
-            <li>
-                <h3>Location 3</h3>
-                <p>Sentence 1</p>
-                <p>Sentence 2</p>
-            </li>
-        </ul>
+<ul id="myList">
+    <li>
+        <h3>University of Alabama at Birmingham</h3>
+        <p>Score: 100 | PI: Carlo Waldemar et al. | Alabama</p>
+        <p>6 previous successful trials | 471 ICU Beds</p>
+    </li>
+    <li>
+        <h3>University of Kentucky Chandler Medical Center</h3>
+        <p>Score: 98.38 | PI: Hubert Ballard | Kentucky</p>
+        <p>3 previous successful trials | 260 ICU Beds</p>
+    </li>
+    <li>
+        <h3>Helen Keller Hospital</h3>
+        <p>Score: 92.56 | PI: Amy Lightner | Alabama</p>
+        <p>1 previous successful trial | 22 ICU Beds</p>
+    </li>
+    <li>
+        <h3>USA Women and Children’s Hospital</h3>
+        <p>Score: 91.62 | PI: James Cummings | Alabama</p>
+        <p>1 previous successful trial | 157 ICU Beds</p>
+    </li>
+    <li>
+        <h3>Rockefeller Neuroscience Institute</h3>
+        <p>Score: 90.74 | PI: Ali Rezai | West Virginia</p>
+        <p>1 previous successful trial | 119 ICU Beds</p>
+    </li>
+    <li>
+        <h3>Medical Affiliated Research Center</h3>
+        <p>Score: 86.61 | PI: R Swerdloff | Alabama</p>
+        <p>2 previous successful trials | 100 ICU Beds</p>
+    </li>
+</ul>
     </div>
 
 
@@ -382,39 +403,43 @@ def main(weight_toggle, marker_cluster_toggle, list_toggle):
             }
         });
 
-        $('#checkbox-form').submit(function(e){
-            e.preventDefault();
-            var selected = [];
-            $("input[type='checkbox']:checked").each(function(){
-                selected.push($(this).val());
-            });
-            $.ajax({
-                url: '/checkboxes',
-                type: 'post',
-                contentType: 'application/json',
-                data : JSON.stringify(selected),
-                success: function(){
-                    window.location.href = "/result";
-                }
-            });
-        // Show loader
-        $("#loader").css("display", "block");
-        $.ajax({
-            url: '/checkboxes',
-            type: 'post',
-            contentType: 'application/json',
-            data : JSON.stringify(selected),
-            success: function(){
-                window.location.href = "/result";
-            },
-            complete: function(){
-                // Hide loader
-                $("#loader").css("display", "none");
-            }
-        });
+   var counter = 0;
+
+    function loadingAnimation() {
+        var dots = window.setInterval( function() {
+            var wait = document.getElementById("loading-text");
+
+            wait.innerHTML = "GEn1E Ridge Processor" + ".".repeat(counter+1);
+            counter = (counter + 1) % 3;
+        }, 1000);
+        return dots;
+    };
 
 
-        });
+$('#checkbox-form').submit(function(e){
+    e.preventDefault();
+    var selected = [];
+    $("input[type='checkbox']:checked").each(function(){
+        selected.push($(this).val());
+    });
+    // Show loading text and start the animation
+    $("#loading-text").css("display", "block");
+    var dots = loadingAnimation(); // Start the loading animation
+    $.ajax({
+        url: '/checkboxes',
+        type: 'post',
+        contentType: 'application/json',
+        data : JSON.stringify(selected),
+        success: function(){
+            window.location.href = "/result";
+        },
+        complete: function(){
+            // Hide loading text and stop the animation
+            $("#loading-text").css("display", "none");
+            clearInterval(dots);
+        }
+    });
+});
 
         """
 
@@ -527,7 +552,7 @@ def main(weight_toggle, marker_cluster_toggle, list_toggle):
     }
 
     #myList li {
-        padding: 15px 20px 20px; /* Reduced top padding */
+        padding: 15px 15px 15px; /* Reduced top padding */
         border-radius: 8px;
         background-color: rgba(255, 255, 255, 0.8);
         margin-bottom: 10px;
@@ -618,13 +643,16 @@ def main(weight_toggle, marker_cluster_toggle, list_toggle):
                     <span>Top Locations</span> 
                 </label>
             </fieldset>
-                    <div class="submit-area">
-                <button type="submit">Compute</button>
-                <lottie-player id="loader" src="https://assets1.lottiefiles.com/packages/lf20_usmfx6bp.json" background="transparent" speed="1" style="width: 125px; height: 125px; display: none; position: absolute; top: 79%; right: -30px; transform: translateY(0%);" loop autoplay></lottie-player>
-            </div>
+        <div class="submit-area">
+            <button type="submit">Compute</button>
+        </div>
+        <div id="loading-text" style="text-align: center; font-size: 16px; display: none;">GEn1E Ridge Processor</div>
+        
         </form>
     </div> 
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <div style="position: fixed; bottom: 30px; right: 10px; z-index: 9999;">
+    <img src="https://uploads-ssl.webflow.com/608bbb52742675860410dd77/647f8bf9ce5c07118bcd4b1e_County%20level%20scoring%20card%20LEGEND.png" alt="Logo" style="width: 214px;">
+</div>
         """
         script = """
         
@@ -658,38 +686,44 @@ def main(weight_toggle, marker_cluster_toggle, list_toggle):
             }
         });
 
-        $('#checkbox-form').submit(function(e){
-            e.preventDefault();
-            var selected = [];
-            $("input[type='checkbox']:checked").each(function(){
-                selected.push($(this).val());
-            });
-            $.ajax({
-                url: '/checkboxes',
-                type: 'post',
-                contentType: 'application/json',
-                data : JSON.stringify(selected),
-                success: function(){
-                    window.location.href = "/result";
-                }
-            });
-        // Show loader
-        $("#loader").css("display", "block");
-        $.ajax({
-            url: '/checkboxes',
-            type: 'post',
-            contentType: 'application/json',
-            data : JSON.stringify(selected),
-            success: function(){
-                window.location.href = "/result";
-            },
-            complete: function(){
-                // Hide loader
-                $("#loader").css("display", "none");
-            }
-        });
+    var counter = 0;
 
-        });
+    function loadingAnimation() {
+        var dots = window.setInterval( function() {
+            var wait = document.getElementById("loading-text");
+
+            wait.innerHTML = "GEn1E Ridge Processor" + ".".repeat(counter+1);
+            counter = (counter + 1) % 3;
+        }, 1000);
+        return dots;
+    };
+
+
+$('#checkbox-form').submit(function(e){
+    e.preventDefault();
+    var selected = [];
+    $("input[type='checkbox']:checked").each(function(){
+        selected.push($(this).val());
+    });
+    // Show loading text and start the animation
+    $("#loading-text").css("display", "block");
+    var dots = loadingAnimation(); // Start the loading animation
+    $.ajax({
+        url: '/checkboxes',
+        type: 'post',
+        contentType: 'application/json',
+        data : JSON.stringify(selected),
+        success: function(){
+            window.location.href = "/result";
+        },
+        complete: function(){
+            // Hide loading text and stop the animation
+            $("#loading-text").css("display", "none");
+            clearInterval(dots);
+        }
+    });
+});
+
 
         """
 
@@ -787,35 +821,51 @@ def main(weight_toggle, marker_cluster_toggle, list_toggle):
 
     usa_map.save('togglenow3.html')
 
-#app = Flask(__name__)
-app = Flask(__name__, template_folder='/app')
+app = Flask(__name__, template_folder='/Users/chris/Documents/GitHub/gen1e-ards-sites')
+app.secret_key = 'your_secret_key'  # Set a secret key for session encryption
+
+PASSWORD = 'ridge-site-project'  # Set your desired password here
+
+def authenticate(password):
+    return password == PASSWORD
+
 @app.route('/')
 def index():
-    return render_template('starting_map_loader_revamped.html')  # assuming the html file is named 'checkbox.html'
+    if 'authenticated' in session and session['authenticated']:
+        return render_template('starting_map_loader_revamped.html')
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        password = request.form['password']
+        if authenticate(password):
+            session['authenticated'] = True
+            return redirect(url_for('index'))
+        else:
+            return render_template('login.html', message='Invalid password')
+    else:
+        return render_template('login.html', message='')
+
+@app.route('/logout')
+def logout():
+    session.pop('authenticated', None)
+    return redirect(url_for('index'))
 
 @app.route('/checkboxes', methods=['POST'])
 def checkboxes():
-    indexes = request.get_json()
-    print(indexes)  # print out the received indexes
-    time.sleep(10)  # pause for 10 seconds
+    if 'authenticated' not in session or not session['authenticated']:
+        return redirect(url_for('login'))
 
-
-    main(indexes, indexes, indexes)  # assuming you have a function named 'create_html' that creates the new HTML file
-    #time.sleep(10)
-    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+    # Rest of your code
 
 @app.route('/result')
 def result():
-    return send_from_directory('/app', 'togglenow3.html')  # send the file from the server
+    if 'authenticated' not in session or not session['authenticated']:
+        return redirect(url_for('login'))
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
-import threading
+    # Rest of your code
 
-# def run_app():
-#     app.run(threaded=True)
-
-# t = threading.Thread(target=run_app)
-# t.start()
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=80)
