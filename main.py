@@ -824,7 +824,7 @@ $('#checkbox-form').submit(function(e){
 app = Flask(__name__, template_folder='/app')
 app.secret_key = 'your_secret_key'  # Set a secret key for session encryption
 
-PASSWORD = 'ards-dashboard'  # Set your desired password here
+PASSWORD = 'g3n13'  # Set your desired password here
 
 def authenticate(password):
     return password == PASSWORD
