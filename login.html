@@ -39,67 +39,6 @@
 }
 
 </style>
-<script>
-  async function submitForm(event) {
-    event.preventDefault(); // Prevent the form from submitting normally
-
-    var vId = document.getElementById('name-8718').value; // Get the value of the v_id form element
-
-    // Show the loading bar
-    showLoading();
-
-    try {
-      // Make the HTTP POST request
-      const response = await postData('https://prod-175.westus.logic.azure.com:443/workflows/29e7e757cace4202b44e4883ddf56bdb/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KR9LTYCw_6bEw6W-HI7DlE5xdNBUB00ilaazlju5514', { v_id: vId });
-	console.log(response.status);
-      if (response.status == "200") {
-        // Redirect to caredx.com if the status is 200
-        window.location.href = 'https://web.caredx-us-api.com/api/PhlebPortalRefer?code=gFWW2e3Z-ktaOqcoJ3HBxVVXNRIfcREkVEb17YAnK0WkAzFuXvEF6w==&ref=200&vendor_id='+vId;
-      } else if (response.status == "206"){
-    
-	    window.location.href = 'https://web.caredx-us-api.com/api/PhlebPortalRefer?code=gFWW2e3Z-ktaOqcoJ3HBxVVXNRIfcREkVEb17YAnK0WkAzFuXvEF6w==&ref=206&vendor_id='+vId;
-      } else {
-        // Show an error message if the status is not 200
-        showErrorId();
-      }
-    } catch (error) {
-      // Show an error message if the request fails
-  console.log(error);
-      
-    } finally {
-      // Hide the loading bar
-      hideLoading();
-    }
-  }
-
-  function postData(url, data) {
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
-  }
-
-  function showLoading() {
-    var loadingBar = document.querySelector('.loading-bar');
-    loadingBar.style.display = 'block';
-  }
-
-  function hideLoading() {
-    var loadingBar = document.querySelector('.loading-bar');
-    loadingBar.style.display = 'none';
-  }
-
-  function showErrorId() {
-    document.getElementById('invalid_id_error').style.display="block";
-  }
-
-  function showErrorServer() {
-    document.getElementById('connection_error').style.display="block";
-  }
-</script>
 
 <style>
   .loading-bar {
