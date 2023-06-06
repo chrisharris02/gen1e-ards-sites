@@ -788,7 +788,7 @@ def main(weight_toggle, marker_cluster_toggle, list_toggle):
     usa_map.save('togglenow3.html')
 
 #app = Flask(__name__)
-app = Flask(__name__, template_folder='/home/chris/Desktop/gen1e-ards-sites')
+app = Flask(__name__, template_folder='/app')
 @app.route('/')
 def index():
     return render_template('starting_map_loader_revamped.html')  # assuming the html file is named 'checkbox.html'
@@ -806,7 +806,7 @@ def checkboxes():
 
 @app.route('/result')
 def result():
-    return send_from_directory('/home/chris/Desktop/gen1e-ards-sites', 'togglenow3.html')  # send the file from the server
+    return send_from_directory('/app', 'togglenow3.html')  # send the file from the server
 
 # if __name__ == '__main__':
 #     app.run(debug=True)
