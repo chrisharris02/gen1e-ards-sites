@@ -40,18 +40,6 @@
 
 </style>
 
-<style>
-  .loading-bar {
-    display: none;
-    width: 100%;
-    height: 4px;
-    background-color: #4CAF50;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-  }
-</style>
     <meta name="theme-color" content="#478ac9">
     <meta property="og:title" content="GEN1E Ridge Site Dashboard">
     <meta property="og:description" content="">
@@ -69,14 +57,11 @@
               <form class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" method="post" action="{{ url_for('login') }}" style="padding: 10px;">
                 <div class="u-form-group u-form-name">
                   <label for="name-8718" class="u-label">Password</label>
-                  <input type="password" placeholder="GEn1E Password" id="password" name="password" class="u-input u-input-rectangle u-input-1" required="" spellcheck="false">
+                  <input type="password" placeholder="GEn1E Password" id="password" required name="password" class="u-input u-input-rectangle u-input-1" required="" spellcheck="false">
                 </div>
                 <div class="u-align-left u-form-group u-form-submit">
                   <input type="submit" value="Login" class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-1 u-btn-1">
-            
                 </div>
-
-                <div class="loading-bar"></div>
               </form>
               
             </div>
