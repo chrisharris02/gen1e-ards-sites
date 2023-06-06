@@ -821,7 +821,7 @@ $('#checkbox-form').submit(function(e){
 
     usa_map.save('togglenow3.html')
 
-app = Flask(__name__, template_folder='/Users/chris/Documents/GitHub/gen1e-ards-sites')
+app = Flask(__name__, template_folder='/app')
 app.secret_key = 'your_secret_key'  # Set a secret key for session encryption
 
 PASSWORD = 'test'  # Set your desired password here
@@ -872,7 +872,7 @@ def checkboxes():
 def result():
     if 'authenticated' not in session or not session['authenticated']:
         return redirect(url_for('login'))
-    return send_from_directory('/Users/chris/Documents/GitHub/gen1e-ards-sites', 'togglenow3.html')  # send the file from the server
+    return send_from_directory('/app', 'togglenow3.html')  # send the file from the server
     # Rest of your code
 import threading
 
