@@ -877,7 +877,7 @@ def result():
 import threading
 
 def run_app():
-    app.run(threaded=True, port=8000)
+    app.run(threaded=True, host="0.0.0.0", port=80)
 
 
 if __name__ == "__main__":
