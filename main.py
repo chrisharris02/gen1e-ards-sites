@@ -824,7 +824,7 @@ $('#checkbox-form').submit(function(e){
 app = Flask(__name__, template_folder='/Users/chris/Documents/GitHub/gen1e-ards-sites')
 app.secret_key = 'your_secret_key'  # Set a secret key for session encryption
 
-PASSWORD = 'ridge-site-project'  # Set your desired password here
+PASSWORD = 'test'  # Set your desired password here
 
 def authenticate(password):
     return password == PASSWORD
@@ -857,6 +857,14 @@ def logout():
 def checkboxes():
     if 'authenticated' not in session or not session['authenticated']:
         return redirect(url_for('login'))
+    indexes = request.get_json()
+    print(indexes)  # print out the received indexes
+    time.sleep(10)  # pause for 10 seconds
+
+
+    main(indexes, indexes, indexes)  # assuming you have a function named 'create_html' that creates the new HTML file
+    #time.sleep(10)
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
     # Rest of your code
 
@@ -864,8 +872,14 @@ def checkboxes():
 def result():
     if 'authenticated' not in session or not session['authenticated']:
         return redirect(url_for('login'))
-
+    return send_from_directory('/Users/chris/Documents/GitHub/gen1e-ards-sites', 'togglenow3.html')  # send the file from the server
     # Rest of your code
+import threading
+
+def run_app():
+    app.run(threaded=True, port=8000)
+
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=80)
+    t = threading.Thread(target=run_app)
+    t.start()
