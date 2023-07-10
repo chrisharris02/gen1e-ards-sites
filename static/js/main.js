@@ -118,8 +118,8 @@ map.on('load', function () {
             'interpolate',
             ['linear'],
             ['get', 'Score'], // Use the 'Score' property for interpolation
-            0, '#440154',
-            0.5, '#fde724',
+            0, '#1eff00',
+            0.5, '#d42a33',
           ],
           'fill-opacity': 0.8 // Adjust the fill opacity as needed
         }
