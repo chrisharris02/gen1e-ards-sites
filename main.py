@@ -5,6 +5,10 @@ from sklearn.preprocessing import MinMaxScaler
 import random
 from csvloader import main
 from flask import Flask, jsonify, render_template, request, session, redirect, url_for
+import json
+import os
+import io
+from shapely.geometry import shape, Point
 
 app = Flask(__name__)
 
@@ -15,14 +19,21 @@ PASSWORD = 'g3n13'  # Set your desired password here
 def authenticate(password):
     return password == PASSWORD
 
+
 def data_to_geojson(df):
     features = []
+    with open('output.geojson') as file:
+        geojson_data = json.load(file)
+
     for _, row in df.iterrows():
-        geometry = geojson.Point((row["Longitude"], row["Latitude"]))
-        properties = row.to_dict()
-        properties.pop("Longitude")
-        properties.pop("Latitude")
-        features.append(geojson.Feature(geometry=geometry, properties=properties))
+        try:
+            geometry = geojson_data['features'][int(row['ID'])-1]['geometry']
+            properties = row.to_dict()
+            properties.pop("Longitude")
+            properties.pop("Latitude")
+            features.append(geojson.Feature(geometry=geometry, properties=properties))
+        except:
+            pass
 
     return geojson.FeatureCollection(features)
 
@@ -84,6 +95,11 @@ def return_image7():
 @app.route('/images/2997911-f08cb926.png')
 def return_image8():
     return send_from_directory('images','2997911-f08cb926.png',)
+
+@app.route('/misc/us_counties.json')
+def return_json():
+    return send_from_directory('misc','us_counties.json',)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':

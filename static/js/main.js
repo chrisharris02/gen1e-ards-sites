@@ -60,13 +60,31 @@ map.on('load', function () {
     map.addControl(nav, 'bottom-left');
 
     const toggleSwitch = document.getElementById('ards_trial_locations_toggle');
+
     const layerId = 'ards-centers-formatted';
     map.setLayoutProperty(layerId, 'visibility', 'none');
-    
+   
+   
+
     map.addSource('heat', {
         type: 'geojson',
         data: '/generate-data' 
     });
+    map.addSource('counties', {
+        type: 'geojson',
+        data: '/misc/us_counties.json'
+      });
+
+
+      map.addLayer({
+        id: 'counties-outline',
+        type: 'line',
+        source: 'counties',
+        paint: {
+          'line-color': '#ff0000', // Set the outline color
+          'line-width': 1 // Set the outline width
+        }
+      });
     const topLocationsToggle = document.getElementById("top_locations_toggle")
     toggleSwitch.addEventListener('change', function() {
         const layer = map.getLayer(layerId);
@@ -90,28 +108,22 @@ map.on('load', function () {
            hideTopLocations();
         }
     });
+
     map.addLayer({
-        id: 'heat',
-        type: 'heatmap',
+        id: 'heat-layer',
+        type: 'fill',
         source: 'heat',
         paint: {
-            'heatmap-weight': ['get', 'Score'],
-            'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 0, 1, 9, 3],
-            'heatmap-color': [
-                'interpolate',
-                ['linear'],
-                ['heatmap-density'],
-                0, 'rgba(33,102,172,0)',
-                0.02, 'rgba(0,172,231,255)',
-                0.05, 'rgba(138,255,67,255)',
-                0.08, 'rgba(251,253,0,255)',
-                0.1, 'rgba(255,222,0,255)',
-                0.15, 'rgba(255,78,47,255)'
-            ],
-            'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 7, 9, 20],
-            'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 1, 9, 0]
+          'fill-color': [
+            'interpolate',
+            ['linear'],
+            ['get', 'Score'], // Use the 'Score' property for interpolation
+            0, '#440154',
+            0.5, '#fde724',
+          ],
+          'fill-opacity': 0.8 // Adjust the fill opacity as needed
         }
-    });
+      });
     map.moveLayer(layerId);
     // Add a hover effect and popup
     map.on('mouseenter', layerId, (e) => {
@@ -166,6 +178,8 @@ document.getElementById('submit').addEventListener('click', function () {
         hideLoader();
 
         map.getSource('heat').setData(data.main); 
+          // Assign county information to each data point
+        
         if (data.cluster !== null) {
             // Add the cluster source and layer to the map
             // Use data.cluster as the data for the source

@@ -18,7 +18,7 @@ def preprocess_data(county_coordinates, smoking_data, copd_data, covid_data, sep
     }
     merged_covid = pd.merge(covid_data, county_coordinates, left_on='fips', right_on='county_fips')
     merged_covid['cases_per_population'] = merged_covid['cases'] / merged_covid['population']
-    merged_covid.dropna(subset=['lat', 'lng', 'cases_per_population'], inplace=True)
+    merged_covid.dropna(subset=['lat', 'lng', 'cases_per_population','id'], inplace=True)
     filtered_covid = merged_covid[(merged_covid['state_name'] != 'Alaska') & (merged_covid['state_name'] != 'Hawaii') & (merged_covid['lat'] < 60)]
     min_covid, max_covid = filtered_covid['cases_per_population'].min(), filtered_covid['cases_per_population'].max()
     normalized_covid = filtered_covid.copy()
@@ -32,7 +32,7 @@ def preprocess_data(county_coordinates, smoking_data, copd_data, covid_data, sep
     normalized_smoking['normalized_smoking'] = (filtered_smoking['Data_Value'] - min_smoking) / (max_smoking - min_smoking)
 
     merged_copd = pd.merge(copd_data, county_coordinates, left_on='LocationID', right_on='county_fips')
-    merged_copd.dropna(subset=['lat', 'lng', 'Percent_COPD'], inplace=True)
+    merged_copd.dropna(subset=['lat', 'lng', 'Percent_COPD','id'], inplace=True)
     filtered_copd = merged_copd[(merged_copd['state_name'] != 'Alaska') & (merged_copd['state_name'] != 'Hawaii') & (merged_copd['lat'] < 60)]
     min_copd, max_copd = 3.2, 15.5
     normalized_copd = filtered_copd.copy()
@@ -100,8 +100,8 @@ def weights(combined_data, weight_toggle):
     )
     global hold
     hold = combined_data
-    combined_data.dropna(subset=['lat', 'lng', 'combined_weighted_value'], inplace=True)
-    heatmap_data = combined_data[['lat', 'lng', 'combined_weighted_value']].values.tolist()
+    combined_data.dropna(subset=['lat', 'lng', 'combined_weighted_value','id'], inplace=True)
+    heatmap_data = combined_data[['lat', 'lng', 'combined_weighted_value','id']].values.tolist()
     df = pd.read_csv('updated_with_state_icu_normalized.csv')
     df['temp'] = df['Hospital Name'].str.lower()
     df = df.drop_duplicates(subset='temp')
@@ -125,6 +125,6 @@ def main(toggles):
         if lat_lng not in seen:
             result.append(lst)
             seen[lat_lng] = True
-    df = pd.DataFrame(result, columns=['Latitude', 'Longitude', 'Score'])
+    df = pd.DataFrame(result, columns=['Latitude', 'Longitude', 'Score', 'ID'])
     df.to_csv('heatmap_coordinate_data.csv', index=False)
     return df
