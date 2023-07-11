@@ -31,7 +31,6 @@ def data_to_geojson(df):
             properties = row.to_dict()
             properties.pop("Longitude")
             properties.pop("Latitude")
-            properties.append(['features'][int(row['ID'])-1]['properties']['NAME'])
             features.append(geojson.Feature(geometry=geometry, properties=properties))
         except:
             pass
