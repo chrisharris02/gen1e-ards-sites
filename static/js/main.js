@@ -12,7 +12,6 @@ infoIcons.forEach(infoIcon => {
 function showTooltip(event) {
   const tooltip = event.target.nextElementSibling;
   tooltip.classList.add('active');
-  console.log("active");
 }
 
 // Function to hide the tooltip
@@ -87,6 +86,7 @@ map.on('load', function () {
 
     const toggleSwitch = document.getElementById('ards_trial_locations_toggle');
 
+    //******ARDS LOCATION MARKERS*******/
     const layerId = 'updated-with-state-icu-normalize';
     map.setLayoutProperty(layerId, 'visibility', 'none');
    
