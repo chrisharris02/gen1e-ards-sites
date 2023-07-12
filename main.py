@@ -105,6 +105,11 @@ def return_image9():
     return send_from_directory('images','legend.png',)
 
 
+@app.route('/images/info-icon.png')
+def return_image10():
+    return send_from_directory('images','info-icon.png',)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':

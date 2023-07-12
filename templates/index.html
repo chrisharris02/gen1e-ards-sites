@@ -91,6 +91,43 @@
       align-items: center;
       z-index: 9999;
       display:None;
+      flex-direction: column;
+      color: white;
+      font-weight: bolder;
+      font-family: 'Open Sans', sans-serif;
+    }
+  .overlay_text{
+    text-align: center;
+    margin-top:20px;
+  }
+
+.overlay_tooltip {
+      position: fixed;
+      top: 10%;
+      left: 1%;
+      width: 25%;
+      max-height: 70%;
+      background-color: rgba(226, 226, 226, 0.7); /* Adjust opacity as needed */
+      z-index: 9999;
+      border-radius: 10px; /* Adjust the value to change the roundness */
+      overflow: hidden;
+      font-size: 12px;
+      line-height:0.5;
+      padding:10px;
+      display:none;
+      
+      
+    text-overflow: ellipsis;
+    }
+
+    .overlay_tooltip h1{
+      font-size: 20px;
+      color:#3f51b5;
+      font-weight: bold;
+    }
+    .overlay_tooltip p{
+      font-size: 12px;
+      line-height: 1.0;
     }
 
     .loader {
@@ -107,17 +144,31 @@
       100% { transform: rotate(360deg); }
     }
 </style>
-<div class="overlay" id="loader_overlay">
-    <div class="loader"></div>
-  </div>
-  
-  <div id="tooltip" style="position: absolute; display: none; pointer-events: none; padding: 10px; background-color: rgba(0, 0, 0, 0.8); color: #fff; font-size: 12px; border-radius: 3px; max-width: 200px;"></div>
 
-          <div id="map"></div>
+<div id="overlay_tooltip"class="overlay_tooltip"></div>
+<div class="overlay" id="loader_overlay">
+ 
+
+    <div class="loader">
+    </div>
+    <div class="overlay_text" style="display:flex">
+      <h5 color="white">GEn1E RIDGE AI is computing your results...</h5>
+    </div>
+   
+  </div>
+ 
+
+
+
+          <div id="map">
+            <p></p>
+          </div>
+          
           <div class="image-container">
             <img src="/images/legend.png" alt="Legend" class="corner-image">
           </div>
         </div>
+        
         <div class="u-container-style u-grey-5 u-group u-radius-15 u-shape-round u-group-1" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-delay="0" data-animation-out="0">
           <div class="u-container-layout u-container-layout-1">
             <div class="u-clearfix u-custom-html u-custom-html-2">
@@ -167,99 +218,189 @@
     margin-left: 0.5rem;
     color: grey; /* Default label color when unchecked */
     font-size: 0.9rem;
+    display: flex;
+  align-items: center;
+
   }
   .switch input:checked + .slider + .switch-label {
     color: black; /* Label color when checked */
-  } </style>
+  } 
+  .info-icon {
+  display: inline-block;
+  width: 15px; /* Adjust the width as needed */
+  height: 15px; /* Adjust the height as needed */
+  background-image: url('/images/info-icon.png');
+  background-size: cover;
+  margin-left: 5px; /* Adjust the margin as needed */
+}
+
+
+.tooltip_hover {
+  position: absolute;
+  top: -30px; /* Adjust the distance of the tooltip from the icon */
+  left: -100px;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 10px; /* Adjust the padding as needed */
+  font-size: 12px;
+  border-radius: 5px; /* Adjust the border radius as needed */
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: normal; /* Allow multiple lines */
+  width: 400px; /* Adjust the width of the tooltip */
+  line-height: 1.4; /* Adjust the line height as needed */
+  z-index: 969; /* Adjust the z-index to ensure the tooltip appears above other elements */
+}
+
+
+.tooltip_hover.active {
+  opacity: 1;
+  display:inline-block;
+}
+
+.tooltip_hover {
+  display: none; /* Hide the tooltip by default */
+}
+
+  </style>
+
               <div style="margin-bottom: 0.5rem;">
                 <label class="switch">
                   <input id="smoking_toggle" type="checkbox" value="0">
                   <span class="slider"></span>
-                  <span class="switch-label">Smoking Data</span>
+                  <span class="switch-label">Smoking Data  <span class="info-icon"></span>
+                  <div class="tooltip_hover" >
+                    This factor maps smoking and tobacco use data across the United States. Smoking is a key cause factor for ARDS.
+                  </div>  
+                </span>
                 </label>
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label class="switch">
                   <input id="copd_toggle" type="checkbox" value="1">
                   <span class="slider"></span>
-                  <span class="switch-label">COPD Data</span>
+                  <span class="switch-label">COPD Data<span class="info-icon"data-tooltip-id="copd_tooltip"></span>
+                  <div class="tooltip_hover"id="copd_tooltip">
+                    COPD, Chronic Obstructive Pulmonary Disease, is characterized by neutrophilic inflammation of the lung and marked decreases in lung compliance during ARDS.
+                  </div>  
+                </span>
                 </label>
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label class="switch">
                   <input id="covid_toggle" type="checkbox" value="2">
                   <span class="slider"></span>
-                  <span class="switch-label">COVID-19 Data</span>
+                  <span class="switch-label">COVID-19 Data   <span class="info-icon"data-tooltip-id="covid_tooltip"></span>
+                  <div class="tooltip_hover"id="covid_tooltip">
+                    Several reputed studies have confirmed a link between ARDS and COVID-19, and COVID-19 2023 data acts as a vital indicator of the conditions prevalence.
+                  </div>  
+                </span>
                 </label>
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label class="switch">
                   <input id="drowning_toggle" type="checkbox" value="3">
                   <span class="slider"></span>
-                  <span class="switch-label">Drowning Data</span>
+                  <span class="switch-label">Drowning Data   <span class="info-icon"data-tooltip-id="drowning_tooltip"></span>
+                  <div class="tooltip_hover"id="drowning_tooltip">
+                    Drowning causes hypoxemia, and fluid aspiration results in lung injury and acute respiratory distress syndrome.
+                  </div> </span>
                 </label>
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label class="switch">
                   <input id="sepsis_toggle" type="checkbox" value="4">
                   <span class="slider"></span>
-                  <span class="switch-label">Sepsis Data</span>
+                  <span class="switch-label">Sepsis Data   <span class="info-icon"data-tooltip-id="sepsis_tooltip"></span>
+                  <div class="tooltip_hover"id="sepsis_tooltip">
+                    Sepsis is the most common cause of ARDS - it is the body’s life threatening response to infection
+                  </div></span>
                 </label>
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label class="switch">
                   <input id="flu_toggle" type="checkbox" value="5">
                   <span class="slider"></span>
-                  <span class="switch-label">Flu Data</span>
+                  <span class="switch-label">Flu Data   <span class="info-icon"data-tooltip-id="flu_tooltip"></span>
+                  <div class="tooltip_hover"id="flu_tooltip">
+                  When there is an exaggerated inflammatory response to influenza, the result can be severe respiratory failure.
+                  </div></span>
                 </label>
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label class="switch">
                   <input id="pneumonia_toggle" type="checkbox" value="6">
                   <span class="slider"></span>
-                  <span class="switch-label">Pneumonia Data</span>
+                  <span class="switch-label">Pneumonia Data   <span class="info-icon"data-tooltip-id="pneumonia_tooltip"></span>
+                  <div class="tooltip_hover"id="pneumonia_tooltip">
+                    Pneumonia can occasionally progress to cause ARDS.
+                    </div></span>
                 </label>
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label class="switch">
                   <input id="vaccination_toggle" type="checkbox" value="7">
                   <span class="slider"></span>
-                  <span class="switch-label">Vaccination Data</span>
+                  <span class="switch-label">Vaccination Data<span class="info-icon"data-tooltip-id="vaccination_tooltip"></span>
+                  <div class="tooltip_hover"id="vaccination_tooltip">
+                    Studies have found full vaccination status was associated with lower ARDS mortality, making the lack of vaccination an important risk factor.
+                    </div></span>
                 </label>
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label class="switch">
                   <input id="literacy_toggle" type="checkbox" value="8">
                   <span class="slider"></span>
-                  <span class="switch-label">Literacy Rates</span>
+                  <span class="switch-label">Literacy Rates   <span class="info-icon"data-tooltip-id="literacy_tooltip"></span>
+                  <div class="tooltip_hover"id="literacy_tooltip">
+                    Literacy Rates impact health inequity - with lower rates associated with decreased access to healthcare systems and support in America. GEn1E’s unique Ridge System takes into account these factors to appropriately map out regions in need of more support.
+                    </div></span>
                 </label>
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label class="switch">
                   <input id="income_toggle" type="checkbox" value="9">
                   <span class="slider"></span>
-                  <span class="switch-label">Income</span>
+                  <span class="switch-label">  Income<span class="info-icon"></span>
+                    <div class="tooltip_hover">
+                      Low income is associated with not only decreased access to healthcare but also increased exposure to cause factors of ARDS. GEn1E identifies issues in health inequity and utilizes granular data to understand and combat these.
+                      </div>
+                  </span>
                 </label>
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label class="switch">
                   <input id="age_toggle" type="checkbox" value="10">
                   <span class="slider"></span>
-                  <span class="switch-label">Age</span>
+                  <span class="switch-label">Age   <span class="info-icon"data-tooltip-id="age_tooltip"></span>
+                  <div class="tooltip_hover"id="age_tooltip">
+                    Studies have found an association between age and the care a person has access to. Moreover, elders have a higher risk of ARDS, which is why GEn1E understands how counties are aging and identifies areas where we can make an impact.
+                    </div></span>
+                </label>
+              </div>
+              <div style="margin-bottom: 0.5rem;">
+                <label class="switch">
+                  <input id="health_insurrance_toggle" type="checkbox" value="11">
+                  <span class="slider"></span>
+                  <span class="switch-label">Health Insurance   <span class="info-icon"data-tooltip-id="insurance_tooltip"></span>
+                  <div class="tooltip_hover"id="insurance_tooltip">
+                    Areas with lower health insurance rates do not have as much access to hospitals and medical centers, which affects treatment and identification of ARDS. GEn1E ridge identifies these resource constrained areas.
+                    </div></span>
                 </label>
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label class="switch">
                   <input  id="ards_trial_locations_toggle" type="checkbox">
                   <span class="slider"></span>
-                  <span class="switch-label">ARDS Trial Locations</span>
+                  <span class="switch-label">ARDS Trial Locations   </span>
                 </label>
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label class="switch">
                   <input id="top_locations_toggle" type="checkbox" >
                   <span class="slider"></span>
-                  <span class="switch-label">Top Locations</span>
+                  <span class="switch-label">Top Locations  </span>
                 </label>
               </div>
               <div style="align-items:center; margin-top:5%;display:flex;">
@@ -269,7 +410,6 @@
           </div>
         </div>
 
-    
         <div style="display:none"id="top_locations_div"class="u-align-center u-container-style u-grey-5 u-group u-radius-19 u-shape-round u-group-2" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-delay="0" data-animation-out="0">
             <div class="u-container-layout u-container-layout-2">
               <p class="u-custom-font u-font-open-sans u-text u-text-1">Top Ranked Locations</p><span class="u-file-icon u-grey-50 u-icon u-icon-circle u-icon-1" onclick="hideTopLocations()"><img src="images/2997911-f08cb926.png" alt=""></span>

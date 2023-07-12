@@ -1,4 +1,28 @@
 // Show the loader overlay
+
+
+const infoIcons = document.querySelectorAll('.info-icon');
+infoIcons.forEach(infoIcon => {
+  infoIcon.addEventListener('mouseenter', showTooltip);
+  infoIcon.addEventListener('mouseleave', hideTooltip);
+  console.log("added listener");
+});
+
+// Function to show the tooltip
+function showTooltip(event) {
+  const tooltip = event.target.nextElementSibling;
+  tooltip.classList.add('active');
+  console.log("active");
+}
+
+// Function to hide the tooltip
+function hideTooltip(event) {
+  const tooltip = event.target.nextElementSibling;
+  tooltip.classList.remove('active');
+}
+
+
+
 function showLoader() {
     document.getElementById('loader_overlay').style.display = 'flex';
 }
@@ -51,7 +75,7 @@ var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/chrisharris02/clit4a96z00c501pw454t1e6n',
     center: [-98.5795, 39.8283], 
-    zoom: 2.0, 
+    zoom: 2.8, 
 });
 
 map.on('load', function () {
@@ -84,7 +108,8 @@ map.on('load', function () {
         source: 'counties',
         paint: {
           'line-color': '#2596be', // Set the outline color
-          'line-width': 0.45 // Set the outline width
+          'line-width': 0.45, // Set the outline width
+          'line-opacity': 0.4
         }
       });
     const topLocationsToggle = document.getElementById("top_locations_toggle")
@@ -120,12 +145,24 @@ map.on('load', function () {
             'interpolate',
             ['linear'],
             ['get', 'Score'], // Use the 'Score' property for interpolation
-            0.0, '#00A3F9', 
-            0.1, '#00D09D',  
-            0.4, '#E7FF00',  
-            0.54, '#FFED00', 
-            0.7, '#FF7800',
-            1.0, '#FF4E2F'    
+            // 0.0, '#00A3F9', 
+            // 0.1, '#00c2bb',  
+            // 0.3, '#00c7b1',
+            // 0.4, '#4cfe55',  
+            // 0.54, '#FFED00', 
+            // 0.7, '#FF7800',
+            // 1.0, '#FF4E2F'    
+            0.0, '#00a0ff', 
+            0.1, '#00b3d8',  
+            0.2, '#00c5b4',
+            0.3, '#00d29a',  
+            0.4, '#efff00', 
+            0.5, '#fef200',
+            0.6, '#ffe400',
+            0.7, '#ffcc00',
+            0.8, '#ffa900',
+            0.9, '#ff4d2f',
+            1.0, '#ff4d2f'    
           ],
           'fill-opacity': 0.8 // Adjust the fill opacity as needed
         }
@@ -153,41 +190,34 @@ map.on('load', function () {
         const url = e.features[0].properties['URL'];
         const principalInvestigator = e.features[0].properties['Principal Investigator'];
     
+
+        document.getElementById("overlay_tooltip").setHTML(`
+        <h1><strong>${hospitalName}</strong></h1>
+        <p><strong>Total Successful Trials:</strong> ${totalSuccessfulTrials}</p>
+        <p><strong>ICU Beds:</strong> ${icuBeds}</p>
+        <p><strong>Normalized Composite Scores:</strong> ${normalizedCompositeScores}</p>
+        <p><strong>Current/Most Recent Study:</strong> ${currentStudy}</p>
+        <p><strong>Status:</strong> ${status}</p>
+        <p><strong>Study Results:</strong> ${studyResults}</p>
+        <p><strong>Interventions:</strong> ${interventions}</p>
+        <p><strong>Outcome Measures:</strong> ${outcomeMeasures}</p>
+        <p><strong>Age:</strong> ${age}</p>
+        <p><strong>Phases:</strong> ${phases}</p>
+        <p><strong>Enrollment:</strong> ${enrollment}</p>
+        <p><strong>Study Type:</strong> ${studyType}</p>
+        <p><strong>Study Designs:</strong> ${studyDesigns}</p>
+        <p><strong>Completion Date:</strong> ${completionDate}</p>
+        <p><strong>URL:</strong> ${url}</p>
+        <p><strong>Principal Investigator:</strong> ${principalInvestigator}</p>
+    `)
         // Create the popup
-        popup = new mapboxgl.Popup({
-            closeButton: false,
-            closeOnClick: false,
-            offset: 10,
-            anchor: 'top-left',
-            offset: [0, -15], // Adjust the offset to control distance from marker
-            className: 'popup-style'
-        })
-            .setLngLat(coordinates)
-            .setHTML(`
-            <p><strong>${hospitalName}</strong></p>
-            <p><strong>Total Successful Trials:</strong> ${totalSuccessfulTrials}</p>
-            <p><strong>ICU Beds:</strong> ${icuBeds}</p>
-            <p><strong>Normalized Composite Scores:</strong> ${normalizedCompositeScores}</p>
-            <p><strong>Current/Most Recent Study:</strong> ${currentStudy}</p>
-            <p><strong>Status:</strong> ${status}</p>
-            <p><strong>Study Results:</strong> ${studyResults}</p>
-            <p><strong>Interventions:</strong> ${interventions}</p>
-            <p><strong>Outcome Measures:</strong> ${outcomeMeasures}</p>
-            <p><strong>Age:</strong> ${age}</p>
-            <p><strong>Phases:</strong> ${phases}</p>
-            <p><strong>Enrollment:</strong> ${enrollment}</p>
-            <p><strong>Study Type:</strong> ${studyType}</p>
-            <p><strong>Study Designs:</strong> ${studyDesigns}</p>
-            <p><strong>Completion Date:</strong> ${completionDate}</p>
-            <p><strong>URL:</strong> ${url}</p>
-            <p><strong>Principal Investigator:</strong> ${principalInvestigator}</p>
-        `)
-            .addTo(map);
+
+        document.getElementById("overlay_tooltip").style.display="block";
     });
 
     map.on('mouseleave', layerId, () => {
         map.getCanvas().style.cursor = '';
-        popup.remove();
+        document.getElementById("overlay_tooltip").style.display="none";
     });
 });
 
