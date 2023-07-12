@@ -191,7 +191,7 @@ map.on('load', function () {
         const principalInvestigator = e.features[0].properties['Principal Investigator'];
     
 
-        document.getElementById("overlay_tooltip").setHTML(`
+        document.getElementById('overlay_tooltip').setHTML(`
         <h1><strong>${hospitalName}</strong></h1>
         <p><strong>Total Successful Trials:</strong> ${totalSuccessfulTrials}</p>
         <p><strong>ICU Beds:</strong> ${icuBeds}</p>
