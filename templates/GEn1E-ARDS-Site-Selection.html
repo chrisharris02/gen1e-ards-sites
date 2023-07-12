@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>GEn1E ARDS Site Selection</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+<link rel="stylesheet" href="GEn1E-ARDS-Site-Selection.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 5.13.1, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "Site23",
+		"logo": "images/GEn1E_Logo.png"
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="GEn1E ARDS Site Selection">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <body class="u-body u-overlap u-xxl-mode" data-lang="en"><header class="u-clearfix u-custom-color-3 u-header u-header" id="sec-49f1"><div class="u-clearfix u-sheet u-sheet-1">
+        <a href="https://gen1e.com" class="u-image u-logo u-image-1" data-image-width="2447" data-image-height="918" title="gen1e.com" target="_blank" data-animation-name="customAnimationIn" data-animation-duration="1000">
+          <img src="images/GEn1E_Logo.png" class="u-logo-image u-logo-image-1">
+        </a><span class="u-file-icon u-icon u-text-custom-color-4 u-icon-1" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-delay="0"><img src="images/993762-010e3098.png" alt=""></span>
+        <p class="u-custom-font u-font-open-sans u-text u-text-custom-color-4 u-text-1" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-delay="0" data-animation-out="0">ARDS Site Selection Tool </p>
+      </div></header>
+    <section class="u-clearfix u-section-1" id="sec-10ef">
+      <div class="u-align-left-xl u-align-left-xxl u-container-style u-grey-5 u-group u-radius-15 u-shape-round u-group-1" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-delay="0" data-animation-out="0">
+        <div class="u-container-layout u-container-layout-1">
+          <div class="u-clearfix u-custom-html u-custom-html-1">
+            <style> .switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: relative;
+  cursor: pointer;
+  width: 3rem;
+  height: 1.7rem;
+  background-color: #ccc;
+  transition: background-color 0.4s;
+  border-radius: 0.85rem;
+  margin-left: 0.5rem;
+}
+.slider:before {
+  content: "";
+  position: absolute;
+  top: 0.15rem;
+  left: 0.15rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  background-color: white;
+  transition: transform 0.4s;
+  border-radius: 50%;
+}
+.switch input:checked + .slider {
+  background-color: #2ca8fd;
+}
+.switch input:focus + .slider {
+  box-shadow: 0 0 1px #2ca8fd;
+}
+.switch input:checked + .slider:before {
+  transform: translateX(1.4rem);
+}
+.switch-label {
+  margin-left: 0.5rem;
+  color: grey; /* Default label color when unchecked */
+  font-size: 0.9rem;
+}
+.switch input:checked + .slider + .switch-label {
+  color: black; /* Label color when checked */
+} </style>
+            <div style="margin-bottom: 0.5rem;">
+              <label class="switch">
+                <input id="smoking_toggle" type="checkbox" value="0">
+                <span class="slider"></span>
+                <span class="switch-label">Smoking Data</span>
+              </label>
+            </div>
+            <div style="margin-bottom: 0.5rem;">
+              <label class="switch">
+                <input id="copd_toggle" type="checkbox" value="1">
+                <span class="slider"></span>
+                <span class="switch-label">COPD Data</span>
+              </label>
+            </div>
+            <div style="margin-bottom: 0.5rem;">
+              <label class="switch">
+                <input id="covid_toggle" type="checkbox" value="2">
+                <span class="slider"></span>
+                <span class="switch-label">COVID-19 Data</span>
+              </label>
+            </div>
+            <div style="margin-bottom: 0.5rem;">
+              <label class="switch">
+                <input id="drowning_toggle" type="checkbox" value="3">
+                <span class="slider"></span>
+                <span class="switch-label">Drowning Data</span>
+              </label>
+            </div>
+            <div style="margin-bottom: 0.5rem;">
+              <label class="switch">
+                <input id="sepsis_toggle" type="checkbox" value="4">
+                <span class="slider"></span>
+                <span class="switch-label">Sepsis Data</span>
+              </label>
+            </div>
+            <div style="margin-bottom: 0.5rem;">
+              <label class="switch">
+                <input id="flu_toggle" type="checkbox" value="5">
+                <span class="slider"></span>
+                <span class="switch-label">Flu Data</span>
+              </label>
+            </div>
+            <div style="margin-bottom: 0.5rem;">
+              <label class="switch">
+                <input id="pneumonia_toggle" type="checkbox" value="6">
+                <span class="slider"></span>
+                <span class="switch-label">Pneumonia Data</span>
+              </label>
+            </div>
+            <div style="margin-bottom: 0.5rem;">
+              <label class="switch">
+                <input id="vaccination_toggle" type="checkbox" value="7">
+                <span class="slider"></span>
+                <span class="switch-label">Vaccination Data</span>
+              </label>
+            </div>
+            <div style="margin-bottom: 0.5rem;">
+              <label class="switch">
+                <input id="vaccination_toggle" type="checkbox" value="7">
+                <span class="slider"></span>
+                <span class="switch-label">Vaccination Data</span>
+              </label>
+            </div>
+            <div style="margin-bottom: 0.5rem;">
+              <label class="switch">
+                <input id="literacy_toggle" type="checkbox" value="8">
+                <span class="slider"></span>
+                <span class="switch-label">Literacy Rates</span>
+              </label>
+            </div>
+            <div style="margin-bottom: 0.5rem;">
+              <label class="switch">
+                <input id="income_toggle" type="checkbox" value="9">
+                <span class="slider"></span>
+                <span class="switch-label">Income</span>
+              </label>
+            </div>
+            <div style="margin-bottom: 0.5rem;">
+              <label class="switch">
+                <input id="age_toggle" type="checkbox" value="10">
+                <span class="slider"></span>
+                <span class="switch-label">Age</span>
+              </label>
+            </div>
+            <div style="margin-bottom: 0.5rem;">
+              <label class="switch">
+                <input id="ards_trial_locations_toggle" type="checkbox" value="11">
+                <span class="slider"></span>
+                <span class="switch-label">ARDS Trial Locations</span>
+              </label>
+            </div>
+            <div style="margin-bottom: 0.5rem;">
+              <label class="switch">
+                <input id="top_locations_toggle" type="checkbox" value="12">
+                <span class="slider"></span>
+                <span class="switch-label">Top Locations</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:none"id="top_locations_div"u-align-left u-container-style u-grey-5 u-group u-radius-19 u-shape-round u-group-2" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-delay="0" data-animation-out="0">
+        <div class="u-container-layout u-container-layout-2">
+          <p class="u-custom-font u-font-open-sans u-text u-text-1">Top Ranked Locations</p><span class="u-file-icon u-grey-50 u-icon u-icon-circle u-opacity u-opacity-50 u-icon-1" onclick="hideTopLocations()"><img src="images/2997911-f08cb926.png" alt=""></span>
+          <div class="u-list u-list-1">
+            <div class="u-repeater u-repeater-1">
+              <div class="u-container-style u-list-item u-repeater-item">
+                <div class="u-container-layout u-similar-container u-container-layout-3">
+                  <p class="u-custom-font u-font-open-sans u-text u-text-custom-color-4 u-text-default u-text-2">University of Alabama at Birmingham</p>
+                  <p class="u-custom-font u-font-open-sans u-text u-text-3">Score: 100 | PI: Carlo Waldemar et al. | Alabama<br>6 previous successful trials | 471 ICU Beds
+                  </p>
+                </div>
+              </div>
+              <div class="u-container-style u-list-item u-repeater-item">
+                <div class="u-container-layout u-similar-container u-container-layout-4">
+                  <p class="u-custom-font u-font-open-sans u-text u-text-custom-color-4 u-text-default u-text-4">University of Kentucky Chandler Medical Center</p>
+                  <p class="u-custom-font u-font-open-sans u-text u-text-5">Score: 98.38 | PI: Hubert Ballard | Kentucky<br>3 previous successful trials | 260 ICU Beds
+                  </p>
+                </div>
+              </div>
+              <div class="u-container-style u-list-item u-repeater-item">
+                <div class="u-container-layout u-similar-container u-container-layout-5">
+                  <p class="u-custom-font u-font-open-sans u-text u-text-custom-color-4 u-text-default u-text-6">Helen Keller Hospital</p>
+                  <p class="u-custom-font u-font-open-sans u-text u-text-7">Score: 92.56 | PI: Amy Lightner | Alabama<br>1 previous successful trial | 22 ICU Beds
+                  </p>
+                </div>
+              </div>
+              <div class="u-container-style u-list-item u-repeater-item">
+                <div class="u-container-layout u-similar-container u-container-layout-6">
+                  <p class="u-custom-font u-font-open-sans u-text u-text-custom-color-4 u-text-default u-text-8">USA Women and Children's Hospital</p>
+                  <p class="u-custom-font u-font-open-sans u-text u-text-9">Score: 91.62 | PI: James Cummings | Alabama<br>1 previous successful trial | 157 ICU Beds
+                  </p>
+                </div>
+              </div>
+              <div class="u-container-style u-list-item u-repeater-item">
+                <div class="u-container-layout u-similar-container u-container-layout-7">
+                  <p class="u-custom-font u-font-open-sans u-text u-text-custom-color-4 u-text-default u-text-10">Rockefeller Neuroscience Institute</p>
+                  <p class="u-custom-font u-font-open-sans u-text u-text-11">Score: 90.74 | PI: Ali Rezai | West Virginia<br>1 previous successful trial | 119 ICU Beds
+                  </p>
+                </div>
+              </div>
+              <div class="u-container-style u-list-item u-repeater-item">
+                <div class="u-container-layout u-similar-container u-container-layout-8">
+                  <p class="u-custom-font u-font-open-sans u-text u-text-custom-color-4 u-text-default u-text-12">Medical Affiliated Research Center</p>
+                  <p class="u-custom-font u-font-open-sans u-text u-text-13">Score: 86.61 | PI: R. Swerdloff | Alabama<br>2 previous successful trials | 100 ICU Beds
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="u-clearfix u-custom-html u-expanded-width u-custom-html-2">
+        <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+        <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+        <div id="map"></div>
+      </div>
+      <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-1" src="images/legend.png" alt="" data-image-width="514" data-image-height="296">
+    </section>
+    
+    
+    <script src="/static/js/main.js"></script> 
+  
+</body></html>
