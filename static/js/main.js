@@ -190,26 +190,30 @@ map.on('load', function () {
         const url = e.features[0].properties['URL'];
         const principalInvestigator = e.features[0].properties['Principal Investigator'];
     
-
-        document.getElementById('overlay_tooltip').setHTML(`
-        <h1><strong>${hospitalName}</strong></h1>
-        <p><strong>Total Successful Trials:</strong> ${totalSuccessfulTrials}</p>
-        <p><strong>ICU Beds:</strong> ${icuBeds}</p>
-        <p><strong>Normalized Composite Scores:</strong> ${normalizedCompositeScores}</p>
-        <p><strong>Current/Most Recent Study:</strong> ${currentStudy}</p>
-        <p><strong>Status:</strong> ${status}</p>
-        <p><strong>Study Results:</strong> ${studyResults}</p>
-        <p><strong>Interventions:</strong> ${interventions}</p>
-        <p><strong>Outcome Measures:</strong> ${outcomeMeasures}</p>
-        <p><strong>Age:</strong> ${age}</p>
-        <p><strong>Phases:</strong> ${phases}</p>
-        <p><strong>Enrollment:</strong> ${enrollment}</p>
-        <p><strong>Study Type:</strong> ${studyType}</p>
-        <p><strong>Study Designs:</strong> ${studyDesigns}</p>
-        <p><strong>Completion Date:</strong> ${completionDate}</p>
-        <p><strong>URL:</strong> ${url}</p>
-        <p><strong>Principal Investigator:</strong> ${principalInvestigator}</p>
-    `);
+        const setTooltipContent = (content) => {
+            const tooltip = document.querySelector('.overlay_tooltip');
+            tooltip.innerHTML = content;
+          };
+          
+          setTooltipContent(`
+            <h1><strong>${hospitalName}</strong></h1>
+            <p><strong>Total Successful Trials:</strong> ${totalSuccessfulTrials}</p>
+            <p><strong>ICU Beds:</strong> ${icuBeds}</p>
+            <p><strong>Normalized Composite Scores:</strong> ${normalizedCompositeScores}</p>
+            <p><strong>Current/Most Recent Study:</strong> ${currentStudy}</p>
+            <p><strong>Status:</strong> ${status}</p>
+            <p><strong>Study Results:</strong> ${studyResults}</p>
+            <p><strong>Interventions:</strong> ${interventions}</p>
+            <p><strong>Outcome Measures:</strong> ${outcomeMeasures}</p>
+            <p><strong>Age:</strong> ${age}</p>
+            <p><strong>Phases:</strong> ${phases}</p>
+            <p><strong>Enrollment:</strong> ${enrollment}</p>
+            <p><strong>Study Type:</strong> ${studyType}</p>
+            <p><strong>Study Designs:</strong> ${studyDesigns}</p>
+            <p><strong>Completion Date:</strong> ${completionDate}</p>
+            <p><strong>URL:</strong> ${url}</p>
+            <p><strong>Principal Investigator:</strong> ${principalInvestigator}</p>
+          `);
         // Create the popup
 
         document.getElementById("overlay_tooltip").style.display="block";
