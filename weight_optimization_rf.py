@@ -16,7 +16,9 @@ def calculate_weights_rf(data_file):
     # Apply Standardization (Z-score normalization)
     # Normalize both axes
     scaler = StandardScaler()
-    cols_to_scale = ['normalized_smoking', 'normalized_copd', 'normalized_covid', 'normalized_drowning', 'normalized_sepsis', 'normalized_flu', 'normalized_pneumonia', 'normalized_vaccination', 'vals']
+
+    cols_to_scale = ['normalized_smoking', 'normalized_copd', 'normalized_covid', 'normalized_drowning', 'normalized_sepsis', 'normalized_flu', 'normalized_pneumonia', 'normalized_vaccination', 'avg_normalized_incomes', 'avg_normalized_seniors', 'avg_normalized_literacy', 'vals']
+
     df[cols_to_scale] = scaler.fit_transform(df[cols_to_scale])
 
     # Modify the 'normalized_vaccination' column since greater vaccination rates imply lower rates of ARDS according to studies

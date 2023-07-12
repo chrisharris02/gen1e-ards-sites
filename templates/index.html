@@ -28,8 +28,8 @@
     <meta charset="utf-8">
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
     <style> #map {
   height: 100vh;
   width: 100%;
@@ -37,10 +37,11 @@
 .popup-style {
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
-    font-weight: bold;
     padding: 4px 8px;
     border-radius: 4px;
-   
+   max-width:500px;
+   min-width:400px;
+   line-height:1.1;
     overflow: hidden;
     text-overflow: ellipsis;
   } 
@@ -205,14 +206,35 @@
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label class="switch">
-                  <input value="8" id="ards_trial_locations_toggle" type="checkbox">
+                  <input id="literacy_toggle" type="checkbox" value="8">
+                  <span class="slider"></span>
+                  <span class="switch-label">Literacy Rates</span>
+                </label>
+              </div>
+              <div style="margin-bottom: 0.5rem;">
+                <label class="switch">
+                  <input id="income_toggle" type="checkbox" value="9">
+                  <span class="slider"></span>
+                  <span class="switch-label">Income</span>
+                </label>
+              </div>
+              <div style="margin-bottom: 0.5rem;">
+                <label class="switch">
+                  <input id="age_toggle" type="checkbox" value="10">
+                  <span class="slider"></span>
+                  <span class="switch-label">Age</span>
+                </label>
+              </div>
+              <div style="margin-bottom: 0.5rem;">
+                <label class="switch">
+                  <input  id="ards_trial_locations_toggle" type="checkbox">
                   <span class="slider"></span>
                   <span class="switch-label">ARDS Trial Locations</span>
                 </label>
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label class="switch">
-                  <input value="9"id="top_locations_toggle" type="checkbox" >
+                  <input id="top_locations_toggle" type="checkbox" >
                   <span class="slider"></span>
                   <span class="switch-label">Top Locations</span>
                 </label>
