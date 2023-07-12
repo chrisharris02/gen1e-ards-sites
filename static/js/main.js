@@ -169,8 +169,16 @@ map.on('load', function () {
       });
     map.moveLayer(layerId);
   //  Add a hover effect and popup
+  const enterRadius = 10; // Adjust the radius value as per your requirement
+
     map.on('mouseenter', layerId, (e) => {
         map.getCanvas().style.cursor = 'pointer';
+        const features = map.queryRenderedFeatures(e.point, {
+          layers: [layerId],
+          radius: enterRadius
+        });
+        
+        if (features.length > 0) {
         const coordinates = e.features[0].geometry.coordinates.slice();
         const hospitalName = e.features[0].properties['Hospital Name'];
         const totalSuccessfulTrials = e.features[0].properties['Total Successful Trials'];
@@ -217,6 +225,7 @@ map.on('load', function () {
         // Create the popup
 
         document.getElementById("overlay_tooltip").style.display="block";
+        }
     });
 
     map.on('mouseleave', layerId, () => {
