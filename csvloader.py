@@ -49,6 +49,9 @@ def preprocess_data(county_coordinates, smoking_data, copd_data, covid_data, sep
     min_drowning, max_drowning = merged_drowning['Dd'].min(), merged_drowning['Dd'].max()
     normalized_drowning = merged_drowning.copy()
     normalized_drowning['normalized_drowning'] = (merged_drowning['Dd'] - min_drowning) / (max_drowning - min_drowning)
+    mind = normalized_drowning['normalized_drowning'] .min()
+    maxd  = normalized_drowning['normalized_drowning'] .max()
+    normalized_drowning['normalized_drowning'] = (normalized_drowning['normalized_drowning']  - mind)/(maxd-mind)
 
     merged_vaccination = pd.merge(county_coordinates, vaccination_data, left_on='state_name', right_on='Location', how='left')
     min_vaccination, max_vaccination = merged_vaccination['Flu Vaccination Rate'].min(), merged_vaccination['Flu Vaccination Rate'].max()
@@ -59,6 +62,9 @@ def preprocess_data(county_coordinates, smoking_data, copd_data, covid_data, sep
     min_flu, max_flu = merged_flu['ACTIVITY_LEVEL'].min(), merged_flu['ACTIVITY_LEVEL'].max()
     normalized_flu = merged_flu.copy()
     normalized_flu['normalized_flu'] = (merged_flu['ACTIVITY_LEVEL'] - min_flu) / (max_flu - min_flu)
+    mind = normalized_flu['normalized_flu'] .min()
+    maxd  = normalized_flu['normalized_flu'] .max()
+    normalized_flu['normalized_flu'] = (normalized_flu['normalized_flu']  - mind)/(maxd-mind)
 
     pneumonia_data['state_name'] = pneumonia_data['STATE'].apply(lambda x: state_abbreviations.get(x))
     merged_pneumonia = pd.merge(county_coordinates, pneumonia_data, on='state_name', how='left')
@@ -115,7 +121,7 @@ def preprocess_data(county_coordinates, smoking_data, copd_data, covid_data, sep
     combined_data = pd.merge(combined_data, normalized_incomes, on=['lat', 'lng', 'state_name'])
     combined_data = combined_data[combined_data['date'] == '2023-01-01']
     combined_data = pd.merge(combined_data, normalized_health_insurance, on=["county_full_y", "state_name"], how="left")
-
+    combined_data = combined_data[combined_data['date'] == '2023-01-01']
     global temp
     temp = combined_data
     return combined_data, temp
@@ -163,6 +169,9 @@ def weights(combined_data, weight_toggle):
     )
     global hold
     hold = combined_data
+    combined_data.rename(columns={'id_smoking': 'id'}, inplace=True)
+    combined_data.dropna(subset=['lat', 'lng', 'combined_weighted_value','id'], inplace=True)
+    
     heatmap_data = combined_data[['lat', 'lng', 'combined_weighted_value','id']].values.tolist()
     df = pd.read_csv('updated_with_state_icu_normalized.csv')
     df['temp'] = df['Hospital Name'].str.lower()
@@ -171,6 +180,7 @@ def weights(combined_data, weight_toggle):
         
     df = df.drop_duplicates(subset='Hospital Name')
     locations = [(row['Latitude'], row['Longitude'], row['Hospital Name']) for _, row in df.iterrows()]
+    
     return combined_data, heatmap_data, locations, hold
     
 def main(toggles):
@@ -189,5 +199,9 @@ def main(toggles):
             result.append(lst)
             seen[lat_lng] = True
     df = pd.DataFrame(result, columns=['Latitude', 'Longitude', 'Score', 'ID'])
+
+    mind = df['Score'] .min()
+    maxd  = df['Score'] .max()
+    df['Score'] = (df['Score']  - mind)/(maxd-mind)
     df.to_csv('heatmap_coordinate_data.csv', index=False)
     return df

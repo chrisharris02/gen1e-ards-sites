@@ -51,7 +51,7 @@ var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/chrisharris02/clit4a96z00c501pw454t1e6n',
     center: [-98.5795, 39.8283], 
-    zoom: 3.5, 
+    zoom: 2.0, 
 });
 
 map.on('load', function () {
@@ -84,7 +84,7 @@ map.on('load', function () {
         source: 'counties',
         paint: {
           'line-color': '#2596be', // Set the outline color
-          'line-width': 1 // Set the outline width
+          'line-width': 0.45 // Set the outline width
         }
       });
     const topLocationsToggle = document.getElementById("top_locations_toggle")

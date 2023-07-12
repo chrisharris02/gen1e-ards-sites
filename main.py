@@ -100,6 +100,11 @@ def return_image8():
 def return_json():
     return send_from_directory('misc','us_counties.json',)
 
+@app.route('/images/legend.png')
+def return_image9():
+    return send_from_directory('images','legend.png',)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
