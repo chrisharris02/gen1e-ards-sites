@@ -209,7 +209,7 @@ map.on('load', function () {
         <p><strong>Completion Date:</strong> ${completionDate}</p>
         <p><strong>URL:</strong> ${url}</p>
         <p><strong>Principal Investigator:</strong> ${principalInvestigator}</p>
-    `)
+    `);
         // Create the popup
 
         document.getElementById("overlay_tooltip").style.display="block";
