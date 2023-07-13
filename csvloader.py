@@ -124,6 +124,7 @@ def preprocess_data(county_coordinates, smoking_data, copd_data, covid_data, sep
     combined_data = combined_data[combined_data['date'] == '2023-01-01']
     global temp
     temp = combined_data
+    temp.to_csv('combined_data_optimized.csv')
     return combined_data, temp
 
 def weights(combined_data, weight_toggle):
@@ -186,8 +187,9 @@ def weights(combined_data, weight_toggle):
 def main(toggles):
  #CHRIS: Additional factors added
     county_coordinates, smoking_data, copd_data, covid_data, sepsis_data, drowning_data, vaccination_data, flu_data, pneumonia_data, ards_centers, literacy_rates, incomes, age, seniors, health_insurance = load_data()
-    combined_data, temp = preprocess_data(county_coordinates, smoking_data, copd_data, covid_data, sepsis_data, drowning_data, vaccination_data, flu_data, pneumonia_data, literacy_rates, incomes, age, seniors, health_insurance)
-    temp.to_csv('temp_debug.csv', index=False)
+    #combined_data, temp = preprocess_data(county_coordinates, smoking_data, copd_data, covid_data, sepsis_data, drowning_data, vaccination_data, flu_data, pneumonia_data, literacy_rates, incomes, age, seniors, health_insurance)
+    #temp.to_csv('temp_debug.csv', index=False)
+    combined_data = pd.read_csv('combined_data_optimized.csv')
     data, heatmap_data, locations, hold = weights(combined_data, toggles)
     grabber = heatmap_data
     list_of_lists = grabber
